@@ -19,13 +19,12 @@ rule read = parse
     | white { read lexbuf } (* Skip whitespace *)
     | newline { read lexbuf }
 
-    | '(' { LPAREN } | ')' { RPAREN } | ';' { SEMICOLON } | ',' { COMMA }
+    | '(' { LPAREN } | ')' { RPAREN } | '[' { LBRACK } | ']' { RBRACK } | ';' { SEMICOLON } | ',' { COMMA }
     | '+' { PLUS } | '-' { MINUS } | '*' { TIMES } | '/' { DIVIDE } | '%' { MOD } | eof { EOF }
     | "true" { TRUE } | "false" { FALSE }
-    | '!' | "not" { NOT } | "&&" | "and" { AND } | "||" | "or" { OR }
+    | '!' | "not" { NOT } | "&&" | "and" { AND } | "||" | "or" { OR } | "implies" | "=>" { IMPLIES }
     | '=' { EQ } | "!=" { NEQ } | "<=" { LEQ } | '<' { LT } | '>' { GT } | ">=" { GTE }
-    | "forall" { FORALL } | "exists" { EXISTS } | "implies" | "=>" { IMPLIES }
-    | "skip" { SKIP } | "assume" { ASSUME } | "assert" { ASSERT } | "let" { LET } | "in" { IN } | "if" { IF } | "then" { THEN } | "else" { ELSE } | "while" { WHILE } | "do" { DO }
+    | "skip" { SKIP } | "<-" { ASSIGN } | "if" { IF } | "then" { THEN } | "else" { ELSE } | "while" { WHILE } | "do" { DO }
 
     | int as i { INT (int_of_string i) }
     | string as s { STR s }

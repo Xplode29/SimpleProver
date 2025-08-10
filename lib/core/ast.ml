@@ -15,13 +15,22 @@ type boolean =
   |Not of boolean
   |And of boolean * boolean
   |Or of boolean * boolean
-  |Leq of arithmetic * arithmetic
   |Eq of arithmetic * arithmetic
-  |Forall of string list * boolean
+  |Leq of arithmetic * arithmetic
+
+type formula =
+  |TrueF
+  |FalseF
+  |NotF of formula
+  |AndF of formula * formula
+  |OrF of formula * formula
+  |ImplyF of formula * formula
+  |EqF of arithmetic * arithmetic
+  |LeqF of arithmetic * arithmetic
 
 type command = 
   |Skip
-  |Let of string * arithmetic * command
+  |Assign of string * arithmetic
   |If of boolean * command * command
-  |While of boolean * command
+  |While of boolean * formula * command
   |Seq of command * command
