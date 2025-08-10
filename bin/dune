@@ -1,4 +1,4 @@
 (executable
  (public_name simple_prover)
  (name main)
- (libraries simple_prover))
+ (libraries core prover))
