@@ -1,0 +1,7 @@
+requires {true}
+ensures {y == 0 || y == 1}
+if x <= 10 then (
+    y := 0
+) else (
+    y := 1
+)

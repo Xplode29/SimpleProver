@@ -1,0 +1,3 @@
+requires {x >= 0}
+ensures {x >= 1}
+x := x + 1
