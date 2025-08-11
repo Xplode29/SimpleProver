@@ -34,3 +34,9 @@ type command =
   |If of boolean * command * command
   |While of boolean * formula * command
   |Seq of command * command
+
+type program = {
+  precondition : formula;
+  postcondition : formula;
+  body : command;
+}

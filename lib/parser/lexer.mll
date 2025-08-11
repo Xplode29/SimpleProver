@@ -4,7 +4,7 @@
 *)
 
 {
-    open Parser        (* The type token is defined in parser.mli *)
+    open Parsing        (* The type token is defined in parsing.mli *)
     exception Eof
 }
 
@@ -19,15 +19,19 @@ rule read = parse
     | white { read lexbuf } (* Skip whitespace *)
     | newline { read lexbuf }
 
-    | '(' { LPAREN } | ')' { RPAREN } | '[' { LBRACK } | ']' { RBRACK } | ';' { SEMICOLON } | ',' { COMMA }
-    | '+' { PLUS } | '-' { MINUS } | '*' { TIMES } | '/' { DIVIDE } | '%' { MOD } | eof { EOF }
+    | '(' { LPAREN } | ')' { RPAREN } | '{' { LBRACK } | '}' { RBRACK } | ';' { SEMICOLON }
+    | "requires" { REQUIRES } | "ensures" { ENSURES } | "invariant" { INVARIANT }
+
+    | '+' { PLUS } | '-' { MINUS } | '*' { TIMES } | '/' { DIVIDE } | '%' { MOD }
+
     | "true" { TRUE } | "false" { FALSE }
     | '!' | "not" { NOT } | "&&" | "and" { AND } | "||" | "or" { OR } | "implies" | "=>" { IMPLIES }
-    | '=' { EQ } | "!=" { NEQ } | "<=" { LEQ } | '<' { LT } | '>' { GT } | ">=" { GTE }
-    | "skip" { SKIP } | "<-" { ASSIGN } | "if" { IF } | "then" { THEN } | "else" { ELSE } | "while" { WHILE } | "do" { DO }
+    | "==" { EQ } | "!=" { NEQ } | "<=" { LEQ } | '<' { LT } | '>' { GT } | ">=" { GTE }
+
+    | "skip" { SKIP } | ":=" { ASSIGN } | "if" { IF } | "then" { THEN } | "else" { ELSE } | "while" { WHILE } | "do" { DO }
 
     | int as i { INT (int_of_string i) }
     | string as s { STR s }
 
-    | eof { raise Eof } (* End of file *)
+    | eof { EOF } (* End of file *)
     | _ as c { raise (Failure ("Unexpected character: " ^ String.make 1 c)) } (* Some error handling *)
