@@ -1,4 +1,5 @@
-/* This file defines a parser for a simple language, using OCaml's Menhir tool. */
+/* File parsing.mly
+   This file defines a parser for a simple language, using OCaml's Menhir tool. */
 
 %{
     open Core.Ast
@@ -6,16 +7,18 @@
 
 %token <int> INT
 %token <string> STR
-%token LPAREN RPAREN LBRACK RBRACK SEMICOLON
+%token LPAREN RPAREN LBRACK RBRACK SEMICOLON DOT
 %token REQUIRES ENSURES INVARIANT
 
-%token PLUS MINUS TIMES DIVIDE MOD EOF
+%token PLUS MINUS TIMES DIVIDE MOD POW
 
 %token TRUE FALSE
 %token NOT AND OR IMPLIES
+%token FORALL EXISTS
 %token EQ NEQ LEQ LT GT GTE
 
 %token SKIP ASSIGN IF THEN ELSE WHILE DO 
+%token EOF
 
 %start <program> program
 %type <arithmetic> arith
@@ -50,13 +53,13 @@ arith:
     | a1 = arith TIMES a2 = arith { Mul (a1, a2) }
     | a1 = arith DIVIDE a2 = arith { Div (a1, a2) }
     | a1 = arith MOD a2 = arith { Mod (a1, a2) }
+    | a1 = arith POW a2 = arith { Pow (a1, a2) }
 ;
 
 bool:
     | simple_bool { $1 }
     | b1 = bool OR b2 = bool { Or (b1, b2) }
     | b1 = bool AND b2 = bool { And (b1, b2) }
-    | b1 = bool IMPLIES b2 = bool { Or (Not b1, b2) }
 ;
 
 simple_bool:
@@ -66,10 +69,10 @@ simple_bool:
     | NOT b = bool { Not b }
     | a1 = arith EQ a2 = arith { Eq (a1, a2) }
     | a1 = arith NEQ a2 = arith { Not (Eq (a1, a2)) }
-    | a1 = arith LT a2 = arith { And (Leq (a1, a2), Not (Eq (a1, a2))) }
+    | a1 = arith LT a2 = arith { Lt (a1, a2) }
     | a1 = arith LEQ a2 = arith { Leq (a1, a2) }
-    | a1 = arith GT a2 = arith { Not (Leq (a1, a2)) }
-    | a1 = arith GTE a2 = arith { Or (Not (Leq (a1, a2)), Eq (a1, a2)) }
+    | a1 = arith GT a2 = arith { Gt (a1, a2) }
+    | a1 = arith GTE a2 = arith { Geq (a1, a2) }
 ;
 
 form:
@@ -84,12 +87,14 @@ simple_formula:
     | FALSE { FalseF }
     | LPAREN b = form RPAREN { b }
     | NOT b = form { NotF b }
+    | FORALL s = STR DOT b = form { ForallF (s, b) }
+    | EXISTS s = STR DOT b = form { ExistsF (s, b) }
     | a1 = arith EQ a2 = arith { EqF (a1, a2) }
     | a1 = arith NEQ a2 = arith { NotF (EqF (a1, a2)) }
-    | a1 = arith LT a2 = arith { AndF (LeqF (a1, a2), NotF (EqF (a1, a2))) }
+    | a1 = arith LT a2 = arith { LtF (a1, a2) }
     | a1 = arith LEQ a2 = arith { LeqF (a1, a2) }
-    | a1 = arith GT a2 = arith { NotF (LeqF (a1, a2)) }
-    | a1 = arith GTE a2 = arith { OrF (NotF (LeqF (a1, a2)), EqF (a1, a2)) }
+    | a1 = arith GT a2 = arith { GtF (a1, a2) }
+    | a1 = arith GTE a2 = arith { GeqF (a1, a2) }
 ;
 
 command:

@@ -5,9 +5,9 @@ let rec wp cmd post = match cmd with
   |Skip -> post, []
   |Assign (var, a) -> replace_formula var a post, []
   |Core.Ast.Seq (c1, c2) ->
-    let wp1, vcs1 = wp c1 post in
-    let wp2, vcs2 = wp c2 wp1 in
-    wp2, vcs1 @ vcs2
+    let wp2, vcs2 = wp c2 post in
+    let wp1, vcs1 = wp c1 wp2 in
+    wp1, vcs1 @ vcs2
   |If (b, c1, c2) ->
     let cond = form_of_bool b in
     let wp1, vcs1 = wp c1 post in

@@ -18,6 +18,9 @@ let rec string_of_bool = function
   | Or (b1, b2) -> "(" ^ string_of_bool b1 ^ " || " ^ string_of_bool b2 ^ ")"
   | Eq (a1, a2) -> "(" ^ string_of_arith a1 ^ " = " ^ string_of_arith a2 ^ ")"
   | Leq (a1, a2) -> "(" ^ string_of_arith a1 ^ " <= " ^ string_of_arith a2 ^ ")"
+  | Lt (a1, a2) -> "(" ^ string_of_arith a1 ^ " < " ^ string_of_arith a2 ^ ")"
+  | Gt (a1, a2) -> "(" ^ string_of_arith a1 ^ " > " ^ string_of_arith a2 ^ ")"
+  | Geq (a1, a2) -> "(" ^ string_of_arith a1 ^ " >= " ^ string_of_arith a2 ^ ")"
 
 let rec string_of_formula = function
   | TrueF -> "true"
@@ -26,8 +29,13 @@ let rec string_of_formula = function
   | AndF (f1, f2) -> "(" ^ string_of_formula f1 ^ " && " ^ string_of_formula f2 ^ ")"
   | OrF (f1, f2) -> "(" ^ string_of_formula f1 ^ " || " ^ string_of_formula f2 ^ ")"
   | ImplyF (f1, f2) -> "(" ^ string_of_formula f1 ^ " => " ^ string_of_formula f2 ^ ")"
+  | ForallF (x, f) -> "(forall " ^ x ^ ". " ^ string_of_formula f ^ ")"
+  | ExistsF (x, f) -> "(exists " ^ x ^ ". " ^ string_of_formula f ^ ")"
   | EqF (a1, a2) -> "(" ^ string_of_arith a1 ^ " = " ^ string_of_arith a2 ^ ")"
   | LeqF (a1, a2) -> "(" ^ string_of_arith a1 ^ " <= " ^ string_of_arith a2 ^ ")"
+  | LtF (a1, a2) -> "(" ^ string_of_arith a1 ^ " < " ^ string_of_arith a2 ^ ")"
+  | GtF (a1, a2) -> "(" ^ string_of_arith a1 ^ " > " ^ string_of_arith a2 ^ ")"
+  | GeqF (a1, a2) -> "(" ^ string_of_arith a1 ^ " >= " ^ string_of_arith a2 ^ ")"
 
 let rec string_of_command = function
   | Skip -> "skip"

@@ -19,13 +19,16 @@ rule read = parse
     | white { read lexbuf } (* Skip whitespace *)
     | newline { read lexbuf }
 
-    | '(' { LPAREN } | ')' { RPAREN } | '{' { LBRACK } | '}' { RBRACK } | ';' { SEMICOLON }
+    | "//" [^ '\n']* { read lexbuf }
+
+    | '(' { LPAREN } | ')' { RPAREN } | '{' { LBRACK } | '}' { RBRACK } | ';' { SEMICOLON } | '.' { DOT }
     | "requires" { REQUIRES } | "ensures" { ENSURES } | "invariant" { INVARIANT }
 
-    | '+' { PLUS } | '-' { MINUS } | '*' { TIMES } | '/' { DIVIDE } | '%' { MOD }
+    | '+' { PLUS } | '-' { MINUS } | '*' { TIMES } | '/' { DIVIDE } | '%' { MOD } | '^' { POW }
 
     | "true" { TRUE } | "false" { FALSE }
     | '!' | "not" { NOT } | "&&" | "and" { AND } | "||" | "or" { OR } | "implies" | "=>" { IMPLIES }
+    | "forall" { FORALL } | "exists" { EXISTS }
     | "==" { EQ } | "!=" { NEQ } | "<=" { LEQ } | '<' { LT } | '>' { GT } | ">=" { GTE }
 
     | "skip" { SKIP } | ":=" { ASSIGN } | "if" { IF } | "then" { THEN } | "else" { ELSE } | "while" { WHILE } | "do" { DO }

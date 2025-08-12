@@ -17,6 +17,9 @@ type boolean =
   |Or of boolean * boolean
   |Eq of arithmetic * arithmetic
   |Leq of arithmetic * arithmetic
+  |Lt of arithmetic * arithmetic
+  |Gt of arithmetic * arithmetic
+  |Geq of arithmetic * arithmetic
 
 type formula =
   |TrueF
@@ -25,8 +28,13 @@ type formula =
   |AndF of formula * formula
   |OrF of formula * formula
   |ImplyF of formula * formula
+  |ForallF of string * formula
+  |ExistsF of string * formula
   |EqF of arithmetic * arithmetic
   |LeqF of arithmetic * arithmetic
+  |LtF of arithmetic * arithmetic
+  |GtF of arithmetic * arithmetic
+  |GeqF of arithmetic * arithmetic
 
 type command = 
   |Skip

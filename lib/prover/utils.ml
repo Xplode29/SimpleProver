@@ -8,6 +8,9 @@ let rec form_of_bool b = match b with
   | Or (b1, b2) -> OrF (form_of_bool b1, form_of_bool b2)
   | Eq (a1, a2) -> EqF (a1, a2)
   | Leq (a1, a2) -> LeqF (a1, a2)
+  | Lt (a1, a2) -> LtF (a1, a2)
+  | Gt (a1, a2) -> GtF (a1, a2)
+  | Geq (a1, a2) -> GeqF (a1, a2)
 
 let rec replace_arith var arith a1 = match a1 with
   | Int i -> Int i
@@ -26,6 +29,13 @@ let rec replace_formula var arith formula = match formula with
   |NotF f -> NotF (replace_formula var arith f)
   |AndF (f1, f2) -> AndF (replace_formula var arith f1, replace_formula var arith f2)
   |OrF (f1, f2) -> OrF (replace_formula var arith f1, replace_formula var arith f2)
+  |ImplyF (f1, f2) -> ImplyF (replace_formula var arith f1, replace_formula var arith f2)
+  |ForallF (x, f) when x = var -> ForallF (x, f)
+  |ExistsF (x, f) when x = var -> ExistsF (x, f)
+  |ForallF (x, f) -> ForallF (x, replace_formula var arith f)
+  |ExistsF (x, f) -> ExistsF (x, replace_formula var arith f)
   |EqF (a1, a2) -> EqF (replace_arith var arith a1, replace_arith var arith a2)
   |LeqF (a1, a2) -> LeqF (replace_arith var arith a1, replace_arith var arith a2)
-  |ImplyF (f1, f2) -> ImplyF (replace_formula var arith f1, replace_formula var arith f2)
+  |LtF (a1, a2) -> LtF (replace_arith var arith a1, replace_arith var arith a2)
+  |GtF (a1, a2) -> GtF (replace_arith var arith a1, replace_arith var arith a2)
+  |GeqF (a1, a2) -> GeqF (replace_arith var arith a1, replace_arith var arith a2)
