@@ -1,0 +1,10 @@
+requires { n >= 0 }
+ensures { r == n * n }
+i := 0;
+r := 0;
+while (i < n)
+  invariant { (r == i * n) and (i <= n) }
+  do (
+    r := r + n;  // Add n, not i
+    i := i + 1
+  )

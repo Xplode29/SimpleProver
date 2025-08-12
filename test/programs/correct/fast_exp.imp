@@ -1,0 +1,16 @@
+requires { b >= 0 }
+ensures { res == a^b }
+res := 1;
+base := a;
+exp := b;
+while exp > 0
+    invariant { res * (base ^ exp) == a^b && exp >= 0 }
+    do (
+        if exp % 2 == 1 then (
+            res := res * base
+        ) else (
+            skip
+        );
+        base := base * base;
+        exp := exp / 2
+    )

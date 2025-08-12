@@ -1,5 +1,0 @@
-requires {x = a && y = b}
-ensures {x = b && y = a}
-x := x + y;
-y := x - y;
-x := x - y

@@ -1,0 +1,3 @@
+requires { true }
+ensures { (z >= x) and (z >= y) and ((z == x) or (z == y)) }
+if (x >= y) then (z := x) else (z := y)

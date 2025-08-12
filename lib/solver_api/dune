@@ -1,0 +1,3 @@
+(library
+ (name solver_api)
+ (libraries core unix))

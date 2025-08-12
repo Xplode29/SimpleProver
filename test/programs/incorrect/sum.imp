@@ -1,0 +1,10 @@
+requires { n >= 0 }
+ensures { s == (n * (n + 1)) / 2 }
+i := 0;
+s := 0;
+while (i < n)
+  invariant { (s == i) and (i <= n) }  // Incorrect: s should be i*(i+1)/2
+  do (
+    i := i + 1;
+    s := s + i
+  )
