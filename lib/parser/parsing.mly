@@ -10,7 +10,7 @@
 %token LPAREN RPAREN LBRACK RBRACK SEMICOLON DOT
 %token REQUIRES ENSURES INVARIANT
 
-%token PLUS MINUS TIMES DIVIDE MOD POW
+%token PLUS MINUS TIMES DIVIDE MOD
 
 %token TRUE FALSE
 %token NOT AND OR IMPLIES
@@ -53,7 +53,6 @@ arith:
     | a1 = arith TIMES a2 = arith { Mul (a1, a2) }
     | a1 = arith DIVIDE a2 = arith { Div (a1, a2) }
     | a1 = arith MOD a2 = arith { Mod (a1, a2) }
-    | a1 = arith POW a2 = arith { Pow (a1, a2) }
 ;
 
 bool:

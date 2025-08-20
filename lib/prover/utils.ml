@@ -20,7 +20,6 @@ let rec replace_arith var arith a1 = match a1 with
   | Add (a1, a2) -> Add (replace_arith var arith a1, replace_arith var arith a2)
   | Mul (a1, a2) -> Mul (replace_arith var arith a1, replace_arith var arith a2)
   | Div (a1, a2) -> Div (replace_arith var arith a1, replace_arith var arith a2)
-  | Pow (a1, a2) -> Pow (replace_arith var arith a1, replace_arith var arith a2)
   | Mod (a1, a2) -> Mod (replace_arith var arith a1, replace_arith var arith a2)
 
 let rec replace_formula var arith formula = match formula with

@@ -6,7 +6,6 @@ type arithmetic =
   |Add of arithmetic * arithmetic
   |Mul of arithmetic * arithmetic
   |Div of arithmetic * arithmetic
-  |Pow of arithmetic * arithmetic
   |Mod of arithmetic * arithmetic
 
 type boolean =

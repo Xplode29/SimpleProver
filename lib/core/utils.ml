@@ -7,7 +7,6 @@ let rec string_of_arith = function
   | Add (a1, a2) -> "(" ^ string_of_arith a1 ^ " + " ^ string_of_arith a2 ^ ")"
   | Mul (a1, a2) -> "(" ^ string_of_arith a1 ^ " * " ^ string_of_arith a2 ^ ")"
   | Div (a1, a2) -> "(" ^ string_of_arith a1 ^ " / " ^ string_of_arith a2 ^ ")"
-  | Pow (a1, a2) -> "(" ^ string_of_arith a1 ^ " ^ " ^ string_of_arith a2 ^ ")"
   | Mod (a1, a2) -> "(" ^ string_of_arith a1 ^ " % " ^ string_of_arith a2 ^ ")"
 
 let rec string_of_bool = function

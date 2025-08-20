@@ -24,7 +24,7 @@ rule read = parse
     | '(' { LPAREN } | ')' { RPAREN } | '{' { LBRACK } | '}' { RBRACK } | ';' { SEMICOLON } | '.' { DOT }
     | "requires" { REQUIRES } | "ensures" { ENSURES } | "invariant" { INVARIANT }
 
-    | '+' { PLUS } | '-' { MINUS } | '*' { TIMES } | '/' { DIVIDE } | '%' { MOD } | '^' { POW }
+    | '+' { PLUS } | '-' { MINUS } | '*' { TIMES } | '/' { DIVIDE } | '%' { MOD }
 
     | "true" { TRUE } | "false" { FALSE }
     | '!' | "not" { NOT } | "&&" | "and" { AND } | "||" | "or" { OR } | "implies" | "=>" { IMPLIES }
